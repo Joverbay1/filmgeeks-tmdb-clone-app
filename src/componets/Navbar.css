@@ -1,0 +1,30 @@
+.navbar {
+  background-color: #333;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar form {
+  display: flex;
+}
+
+.navbar input,
+.navbar button {
+  padding: 8px;
+  margin-left: 5px;
+}
+
+.navbar button {
+  background-color: #555;
+  border: none;
+  color: white;
+  cursor: pointer;
+}

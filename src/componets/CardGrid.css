@@ -1,0 +1,23 @@
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 20px;
+}
+
+.movie-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.movie-card img {
+  width: 100%;
+  display: block;
+}
+
+.movie-card .movie-info {
+  padding: 10px;
+  text-align: left;
+}
