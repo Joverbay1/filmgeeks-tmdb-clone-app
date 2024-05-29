@@ -5,16 +5,23 @@ import "./index.css";
 import App from "./App";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import reportWebVitals from "./reportWebVitals";
 
+// Your Google client ID
+const googleClientId =
+  " 959314789747-h0qvsfqhk5au1aano7jjbop7nmrpnv5g.apps.googleusercontent.com";
+
 ReactDOM.render(
-  <BrowserRouter>
-    <React.StrictMode>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </React.StrictMode>
-  </BrowserRouter>,
+  <GoogleOAuthProvider clientId={googleClientId}>
+    <BrowserRouter>
+      <React.StrictMode>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </React.StrictMode>
+    </BrowserRouter>
+  </GoogleOAuthProvider>,
   document.getElementById("root")
 );
 

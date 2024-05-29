@@ -7,6 +7,10 @@
   padding: 10px 20px;
 }
 
+.logo img {
+  width: 60px;
+}
+
 .navbar a {
   color: #fff;
   text-decoration: none;
@@ -27,4 +31,9 @@
   border: none;
   color: white;
   cursor: pointer;
+}
+
+.google-login-container {
+  display: flex;
+  align-items: center;
 }
