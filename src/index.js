@@ -10,7 +10,7 @@ import reportWebVitals from "./reportWebVitals";
 
 // Your Google client ID
 const googleClientId =
-  " 959314789747-h0qvsfqhk5au1aano7jjbop7nmrpnv5g.apps.googleusercontent.com";
+  "959314789747-h0qvsfqhk5au1aano7jjbop7nmrpnv5g.apps.googleusercontent.com";
 
 ReactDOM.render(
   <GoogleOAuthProvider clientId={googleClientId}>
