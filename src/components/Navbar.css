@@ -4,11 +4,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 15px 30px; /* Increased padding */
 }
 
 .logo img {
-  width: 60px;
+  width: 80px; /* Increased width */
 }
 
 .navbar a {
@@ -22,7 +22,7 @@
 
 .navbar input,
 .navbar button {
-  padding: 8px;
+  padding: 10px; /* Increased padding */
   margin-left: 5px;
 }
 

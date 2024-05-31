@@ -1,30 +1,32 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchMovies } from "../redux/moviesSlice";
+import { fetchMoviesByCategory } from "../redux/moviesSlice";
 import MovieCard from "./MovieCard";
-import "./CardGrid.css";
-import { Spinner } from "./Spinner";
+import Spinner from "./Spinner";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "./CardGrid.css";
 
 const CardGrid = () => {
   const dispatch = useDispatch();
-  const movies = useSelector((state) => state.movies.movies);
+  const categories = useSelector((state) => state.movies.categories);
   const status = useSelector((state) => state.movies.status);
   const error = useSelector((state) => state.movies.error);
 
   useEffect(() => {
-    dispatch(fetchMovies({ category: "popular", page: 1 }));
+    // Fetch movies for each category on component mount
+    ["popular", "now_playing", "upcoming", "top_rated"].forEach((category) =>
+      dispatch(fetchMoviesByCategory({ category }))
+    );
   }, [dispatch]);
 
-  // Carousel settings
   const settings = {
     dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 5, // Show 5 slides at a time
+    slidesToScroll: 5,
     responsive: [
       {
         breakpoint: 1024,
@@ -35,47 +37,32 @@ const CardGrid = () => {
           dots: true,
         },
       },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
+      { breakpoint: 600, settings: { slidesToShow: 2, slidesToScroll: 2 } },
+      { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } },
     ],
   };
 
   return (
     <div className="card-grid">
       {status === "loading" && <Spinner />}
-      {status === "failed" && (
-        <p>
-          Error: {error}{" "}
-          <button
-            onClick={() =>
-              dispatch(fetchMovies({ category: "popular", page: 1 }))
-            }
-          >
-            Retry
-          </button>
-        </p>
-      )}
-      {movies.length === 0 && status === "succeeded" && (
-        <p>No movies available.</p>
-      )}
-      <Slider {...settings}>
-        {movies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))}
-      </Slider>
+      {status === "failed" && <p>Error: {error}</p>}
+      {Object.entries(categories).map(([key, movies]) => (
+        <div key={key} className="category-section">
+          <div className="category-header">
+            <h2 className="category-title">
+              {key.replace("_", " ").toUpperCase()}
+            </h2>
+            <button className="link-button">See all</button>
+          </div>
+          <Slider {...settings}>
+            {movies && movies.length > 0 ? (
+              movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)
+            ) : (
+              <p>No movies available.</p>
+            )}
+          </Slider>
+        </div>
+      ))}
     </div>
   );
 };

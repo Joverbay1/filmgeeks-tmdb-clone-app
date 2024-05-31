@@ -11,7 +11,6 @@ const Navbar = () => {
   const [userData, setUserData] = useState({});
   const [error, setError] = useState("");
   const dispatch = useDispatch();
-  const logoPath = process.env.REACT_APP_LOGO_PATH; // Corrected the case sensitivity
 
   const handleLoginSuccess = useCallback((response) => {
     console.log("Login Success:", response);
@@ -44,7 +43,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="logo">
         <Link to="/">
-          <img src={logoPath} alt="Logo" style={{ width: "60px" }} />
+          <img src="/FilmGeeks Logo.jpg" alt="Logo" style={{ width: "80px" }} />
         </Link>
       </div>
       <form onSubmit={handleSearch} className="search-form">
