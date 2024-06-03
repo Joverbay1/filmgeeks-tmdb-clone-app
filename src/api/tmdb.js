@@ -14,9 +14,10 @@ const tmdbApi = axios.create({
 // Generic error handling function
 function handleError(error, details) {
   console.error("API Error:", { error: error.message, ...details });
-  throw new Error(
-    `API request failed: ${error.message}. Please try again later.`
-  );
+  return {
+    message: `API request failed: ${error.message}. Please try again later.`,
+    details,
+  };
 }
 
 export const fetchMoviesByCategory = async (category = "popular", page = 1) => {
@@ -26,12 +27,11 @@ export const fetchMoviesByCategory = async (category = "popular", page = 1) => {
     });
     return response.data;
   } catch (error) {
-    handleError(error, {
+    return handleError(error, {
       context: "Fetching movies by category",
       category,
       page,
     });
-    return;
   }
 };
 
@@ -40,7 +40,7 @@ export const fetchMovieDetails = async (movieId) => {
     const response = await tmdbApi.get(`/movie/${movieId}`);
     return response.data;
   } catch (error) {
-    handleError(error, { context: "Fetching movie details", movieId });
+    return handleError(error, { context: "Fetching movie details", movieId });
   }
 };
 
@@ -51,6 +51,6 @@ export const searchMovies = async (query, page = 1) => {
     });
     return response.data;
   } catch (error) {
-    handleError(error, { context: "Searching movies", query, page });
+    return handleError(error, { context: "Searching movies", query, page });
   }
 };

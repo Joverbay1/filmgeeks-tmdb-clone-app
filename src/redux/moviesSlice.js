@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
-const BASE_URL = "https://api.themoviedb.org/3";
+const BASE_URL = process.env.REACT_APP_TMDB_URL;
 
 // Fetch movies by category
 export const fetchMoviesByCategory = createAsyncThunk(
@@ -37,7 +37,7 @@ export const fetchMovieById = createAsyncThunk(
 // Async thunk for searching movies
 export const searchMovies = createAsyncThunk(
   "movies/searchMovies",
-  async ({ query, page }, { rejectWithValue }) => {
+  async ({ query, page = 1 }, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${BASE_URL}/search/movie`, {
         params: { query, page, api_key: API_KEY },
@@ -85,10 +85,18 @@ const moviesSlice = createSlice({
         state.movieDetails[action.meta.arg] = action.payload;
         state.status = "succeeded";
       })
+      .addCase(fetchMovieById.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
       // Handle searchMovies
       .addCase(searchMovies.fulfilled, (state, action) => {
         state.searchResults = action.payload.results;
         state.status = "succeeded";
+      })
+      .addCase(searchMovies.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
   },
 });

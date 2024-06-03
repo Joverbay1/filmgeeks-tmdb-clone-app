@@ -6,7 +6,7 @@ import Spinner from "./Spinner";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "./CardGrid.css";
+import styles from "./CardGrid.module.css";
 
 const CardGrid = () => {
   const dispatch = useDispatch();
@@ -43,16 +43,16 @@ const CardGrid = () => {
   };
 
   return (
-    <div className="card-grid">
+    <div className={styles.cardGrid}>
       {status === "loading" && <Spinner />}
-      {status === "failed" && <p>Error: {error}</p>}
+      {status === "failed" && <p>Error: {error.message}</p>}
       {Object.entries(categories).map(([key, movies]) => (
-        <div key={key} className="category-section">
-          <div className="category-header">
-            <h2 className="category-title">
+        <div key={key} className={styles.categorySection}>
+          <div className={styles.categoryHeader}>
+            <h2 className={styles.categoryTitle}>
               {key.replace("_", " ").toUpperCase()}
             </h2>
-            <button className="link-button">See all</button>
+            <button className={styles.linkButton}>See all</button>
           </div>
           <Slider {...settings}>
             {movies && movies.length > 0 ? (

@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import CardGrid from "./components/CardGrid";
 import MovieDetails from "./components/MovieDetails";
+import SearchResults from "./components/SearchResults";
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import "./styles/App.css";
@@ -33,11 +34,8 @@ function App() {
         })
         .catch((err) => console.log(err));
 
-      // Handle token expiry
       const timer = setTimeout(() => {
         console.log("Token expired");
-        // Here you could also call a function to refresh the token
-        // or log out the user
         googleLogout();
         setUser(null);
         setProfile(null);
@@ -77,6 +75,7 @@ function App() {
           }
         />
         <Route path="/movie/:id" element={<MovieDetails />} />
+        <Route path="/search" element={<SearchResults />} />
       </Routes>
     </div>
   );

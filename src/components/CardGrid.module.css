@@ -1,57 +1,58 @@
-.card-grid {
+.cardGrid {
   display: flex;
   flex-direction: column; /* Arrange categories vertically */
-  gap: 0; /* Remove the gap between categories */
+  gap: 20px; /* Reduce gap between categories */
   padding: 10px; /* Maintain some padding around the grid */
+  background-color: black;
 }
 
-.category-section {
+.categorySection {
   margin-bottom: 10px; /* Add a small margin at the bottom of each category section */
 }
 
-.category-header {
+.categoryHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 5px; /* Reduce the margin below the category header */
 }
 
-.slick-slider {
+.slickSlider {
   width: 100%;
 }
 
-.slick-slide {
+.slickSlide {
   display: flex;
   justify-content: center;
   margin: 0 2px; /* Reduce space between slides */
 }
 
-.movie-card {
+.movieCard {
   background-color: black;
-  border: 1px solid goldenrod;
+  border: 25px solid goldenrod;
   border-radius: 20px;
   overflow: hidden;
   width: 250px; /* Adjust the width of movie cards */
 }
 
-.movie-card img {
+.movieCard img {
   width: 100%;
   display: block;
 }
 
-.movie-card .movie-info {
+.movieInfo {
   padding: 5px; /* Reduce padding inside movie cards */
   text-align: left;
   font-size: 10px; /* Reduce font size */
 }
 
-.category-title {
-  font-size: 16px; /* Reduce the font size of category titles */
+.categoryTitle {
+  font-size: 20px; /* Reduce the font size of category titles */
   margin: 5px 0; /* Reduce margin around category titles */
 }
 
 /* Button styled as a link */
-.link-button {
+.linkButton {
   background: none;
   color: goldenrod;
   border: none;
@@ -61,16 +62,16 @@
   text-decoration: underline;
 }
 
-.link-button:hover {
+.linkButton:hover {
   text-decoration: none;
 }
 
 /* Traditional link */
-.link-a {
+.linkA {
   color: goldenrod;
   text-decoration: underline;
 }
 
-.link-a:hover {
+.linkA:hover {
   text-decoration: none;
 }

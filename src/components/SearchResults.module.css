@@ -1,0 +1,16 @@
+.searchResults {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.searchResults p {
+  width: 100%;
+  text-align: center;
+}
+
+.searchResults .movieCard {
+  margin: 10px;
+}

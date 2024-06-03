@@ -1,0 +1,25 @@
+/* MovieCard.module.css */
+.movieCard {
+  background-color: black;
+  border: 1px solid goldenrod;
+  border-radius: 20px;
+  overflow: hidden;
+  width: 250px; /* Adjust the width of movie cards */
+}
+
+.movieCard img {
+  width: 100%;
+  display: block;
+}
+
+.movieInfo {
+  padding: 5px; /* Reduce padding inside movie cards */
+  text-align: left;
+  font-size: 10px; /* Reduce font size */
+}
+
+.movieInfo h3 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
