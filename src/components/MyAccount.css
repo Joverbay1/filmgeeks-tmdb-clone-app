@@ -1,0 +1,17 @@
+.account-container {
+  background-color: #333;
+  color: goldenrod;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 40px auto;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.account-container h2 {
+  margin-bottom: 20px;
+}
+
+.account-container p {
+  font-size: 18px;
+}

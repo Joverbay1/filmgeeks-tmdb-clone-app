@@ -7,10 +7,10 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import reportWebVitals from "./reportWebVitals";
+import "./variables.css";
 
 // Your Google client ID
-const googleClientId =
-  "959314789747-h0qvsfqhk5au1aano7jjbop7nmrpnv5g.apps.googleusercontent.com";
+const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 const root = createRoot(document.getElementById("root"));
 root.render(

@@ -1,25 +1,41 @@
-/* MovieCard.module.css */
 .movieCard {
-  background-color: black;
-  border: 1px solid goldenrod;
-  border-radius: 20px;
-  overflow: hidden;
-  width: 250px; /* Adjust the width of movie cards */
+  background-color: black; /* Set background color */
+  border: 1px solid goldenrod; /* Set border color and width */
+  border-radius: 20px; /* Round the corners */
+  overflow: hidden; /* Hide overflow content */
+  width: 240px; /* Adjust the width of movie cards */
+  transition: transform 0.2s; /* Add a smooth transition for hover effect */
 }
 
+.movieCard:hover {
+  transform: scale(1.1); /* Slightly enlarge the card on hover */
+}
+
+/* Image inside each movie card */
 .movieCard img {
-  width: 100%;
-  display: block;
+  width: 100%; /* Set image to fill the card */
+  display: block; /* Remove any default spacing */
 }
 
+/* Info section inside each movie card */
 .movieInfo {
-  padding: 5px; /* Reduce padding inside movie cards */
-  text-align: left;
-  font-size: 10px; /* Reduce font size */
+  padding: 10px; /* Increase padding inside movie cards for better spacing */
+  text-align: center; /* Align text to the left */
+  font-size: 12px; /* Adjust font size for better readability */
+  color: goldenrod; /* Set text color to goldenrod */
 }
 
+/* Title inside the movie info section */
 .movieInfo h3 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Display ellipsis for overflow text */
+  margin: 0; /* Remove default margin */
+  font-size: 20px; /* Adjust font size for title */
+}
+
+/* Release date inside the movie info section */
+.movieInfo p {
+  font-size: 12px; /* Adjust font size for release date */
+  margin: 5px 0 0; /* Add margin for spacing */
 }

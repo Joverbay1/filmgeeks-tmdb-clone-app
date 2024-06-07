@@ -1,0 +1,53 @@
+.categoryMovies {
+  padding: 20px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.categoryMovies h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+
+.movieGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.movieCard {
+  width: 200px;
+  background-color: #333;
+  color: goldenrod;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.movieCard:hover {
+  transform: scale(1.05);
+}
+
+.moviePoster {
+  width: 100%;
+  height: auto;
+}
+
+.movieInfo {
+  padding: 10px;
+}
+
+.movieTitle {
+  font-size: 16px;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.movieRating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

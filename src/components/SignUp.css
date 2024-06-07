@@ -1,0 +1,83 @@
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: goldenrod;
+}
+
+.signup-form {
+  background-color: #333;
+  padding: 60px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  color: goldenrod;
+}
+
+.signup-form h2 {
+  margin-bottom: 20px;
+}
+
+.signup-form input {
+  width: calc(50% - 10px);
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.signup-form .form-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.signup-form input[type="email"],
+.signup-form input[type="password"] {
+  width: 100%;
+  margin: 5px 0;
+}
+
+.signup-form button {
+  background-color: goldenrod;
+  color: black;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.signup-form .password-requirements {
+  text-align: left;
+  margin: 10px 0;
+  font-size: 12px;
+  color: #ccc;
+}
+
+.signup-form p {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.signup-form a {
+  color: goldenrod;
+  text-decoration: none;
+}
+
+.signup-form a:hover {
+  text-decoration: underline;
+}
+
+.or-divider {
+  margin: 20px 0;
+  color: #ccc;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+}

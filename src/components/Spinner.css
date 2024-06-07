@@ -1,0 +1,7 @@
+/* Container for the spinner */
+.spinner {
+  width: 40px; /* Set width of the spinner */
+  height: 40px; /* Set height of the spinner */
+  position: relative; /* Position elements relative to this container */
+  margin: 100px auto; /* Center the spinner horizontally and add margin at the top and bottom */
+}

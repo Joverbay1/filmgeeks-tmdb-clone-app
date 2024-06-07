@@ -1,28 +1,32 @@
 /* Global Styles */
 
+/* Reset margin, padding, and set box-sizing for common elements */
 body,
 h1,
 h2,
 h3,
 p {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  box-sizing: border-box; /* Set box-sizing to border-box */
 }
 
+/* Body styles */
 body {
-  font-family: "Arial", sans-serif;
-  line-height: 1.6;
-  color: #333;
-  background-color: #f4f4f4;
+  font-family: "Arial", sans-serif; /* Set font family */
+  line-height: 1.6; /* Set line height */
+  color: #333; /* Set text color */
+  background-color: #f4f4f4; /* Set background color */
 }
 
+/* Container styles */
 .container {
-  width: 85%;
-  margin: auto;
-  overflow: hidden;
+  width: 85%; /* Set container width */
+  margin: auto; /* Center the container */
+  overflow: hidden; /* Hide overflow content */
 }
 
+/* Section styles */
 .section {
-  padding: 20px 0;
+  padding: 20px 0; /* Add padding at the top and bottom */
 }

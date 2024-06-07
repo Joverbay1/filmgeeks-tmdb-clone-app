@@ -5,8 +5,13 @@ import store from "../redux/store";
 import { worker } from "../mocks/browser";
 import CardGrid from "./CardGrid";
 
+// Start the service worker before all tests
 beforeAll(() => worker.start());
+
+// Reset any runtime request handlers after each test
 afterEach(() => worker.resetHandlers());
+
+// Stop the service worker after all tests
 afterAll(() => worker.stop());
 
 describe("CardGrid", () => {
@@ -16,7 +21,7 @@ describe("CardGrid", () => {
         <CardGrid />
       </Provider>
     );
-    const movieTitle = await screen.findByText("Sample Movie");
+    const movieTitle = await screen.findByText(/sample movie/i); // Use a case-insensitive regex to match the movie title
     expect(movieTitle).toBeInTheDocument();
   });
 });

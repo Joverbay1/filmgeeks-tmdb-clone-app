@@ -4,6 +4,12 @@ const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 const BASE_URL =
   process.env.REACT_APP_TMDB_URL || "https://api.themoviedb.org/3";
 
+if (!API_KEY) {
+  throw new Error(
+    "API key is missing. Please add REACT_APP_TMDB_API_KEY to your .env file."
+  );
+}
+
 const tmdbApi = axios.create({
   baseURL: BASE_URL,
   params: {
@@ -20,37 +26,32 @@ function handleError(error, details) {
   };
 }
 
-export const fetchMoviesByCategory = async (category = "popular", page = 1) => {
+const fetchData = async (url, params, details) => {
   try {
-    const response = await tmdbApi.get(`/movie/${category}`, {
-      params: { page },
-    });
+    const response = await tmdbApi.get(url, { params });
     return response.data;
   } catch (error) {
-    return handleError(error, {
-      context: "Fetching movies by category",
-      category,
-      page,
-    });
+    return handleError(error, details);
   }
 };
 
-export const fetchMovieDetails = async (movieId) => {
-  try {
-    const response = await tmdbApi.get(`/movie/${movieId}`);
-    return response.data;
-  } catch (error) {
-    return handleError(error, { context: "Fetching movie details", movieId });
-  }
-};
+export const fetchMoviesByCategory = (category = "popular", page = 1) =>
+  fetchData(
+    `/movie/${category}`,
+    { page },
+    { context: "Fetching movies by category", category, page }
+  );
 
-export const searchMovies = async (query, page = 1) => {
-  try {
-    const response = await tmdbApi.get("/search/movie", {
-      params: { query, page },
-    });
-    return response.data;
-  } catch (error) {
-    return handleError(error, { context: "Searching movies", query, page });
-  }
-};
+export const fetchMovieDetails = (movieId) =>
+  fetchData(
+    `/movie/${movieId}`,
+    {},
+    { context: "Fetching movie details", movieId }
+  );
+
+export const searchMovies = (query, page = 1) =>
+  fetchData(
+    "/search/movie",
+    { query, page },
+    { context: "Searching movies", query, page }
+  );

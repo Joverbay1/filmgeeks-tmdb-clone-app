@@ -1,45 +1,38 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { searchMovies } from "../redux/moviesSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import "./Navbar.css";
 import logo from "../FilmGeeksLogo.jpg";
+import { login, logout } from "../redux/userSlice"; // Make sure this is imported
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState({});
-  const [error, setError] = useState("");
   const [menuActive, setMenuActive] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const userData = useSelector((state) => state.user.user);
 
   const handleLoginSuccess = (response) => {
     console.log("Login Success:", response);
-    setIsLoggedIn(true);
-    setUserData(response);
-    setError(""); // Clear any error messages on successful login
+    dispatch(login(response)); // Dispatch login action with user data
   };
 
   const handleLoginFailure = (error) => {
     console.error("Login Failed:", error);
-    setError("Login failed. Please try again.");
+    alert("Login failed. Please try again.");
   };
 
   const handleLogout = () => {
     googleLogout();
-    setIsLoggedIn(false);
-    setUserData({});
-    setError(""); // Clear any error messages on logout
+    dispatch(logout()); // Dispatch logout action
   };
 
   const handleSearch = (event) => {
     event.preventDefault();
     if (searchTerm.trim()) {
-      dispatch(searchMovies({ query: searchTerm, page: 1 }));
-      setError(""); // Clear errors when a new search is initiated
-      navigate("/search"); // Navigate to search results page
+      navigate(`/search?q=${searchTerm}`);
     }
   };
 
@@ -54,18 +47,6 @@ const Navbar = () => {
           <img src={logo} alt="Logo" style={{ width: "80px" }} />
         </Link>
       </div>
-      <div className={`nav-links ${menuActive ? "active" : ""}`}>
-        <Link to="/">Home</Link>
-        <Link to="/add-movies">Add Movies</Link>
-        <Link to="/edit-list">Edit List</Link>
-        <Link to="/edit-account">Edit Account</Link>
-        <Link to="/create-list">Create List</Link>
-      </div>
-      <div className="hamburger" onClick={toggleMenu}>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
       <form onSubmit={handleSearch} className="search-form">
         <input
           type="text"
@@ -75,24 +56,54 @@ const Navbar = () => {
         />
         <button type="submit">Search</button>
       </form>
-      {!isLoggedIn ? (
-        <>
-          <GoogleLogin
-            onSuccess={handleLoginSuccess}
-            onError={handleLoginFailure}
-            useOneTap
-          />
-          {error && <div style={{ color: "red" }}>{error}</div>}
-        </>
-      ) : (
-        <button onClick={handleLogout}>Log out</button>
-      )}
+      <div className="hamburger" onClick={toggleMenu}>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div className={`hamburger-menu ${menuActive ? "active" : ""}`}>
+        <Link to="/" onClick={toggleMenu}>
+          Home
+        </Link>
+        <Link to="/signup" onClick={toggleMenu}>
+          Sign Up
+        </Link>
+        <Link to="/signin" onClick={toggleMenu}>
+          Sign In
+        </Link>
+        {isLoggedIn && (
+          <>
+            <Link to="/account" onClick={toggleMenu}>
+              My Account
+            </Link>
+            <Link to="/watchlist" onClick={toggleMenu}>
+              My Watch List
+            </Link>
+            <Link to="/favorites" onClick={toggleMenu}>
+              My Favorites List
+            </Link>
+            <Link to="/edit-list" onClick={toggleMenu}>
+              Create or Edit List
+            </Link>
+            <button onClick={handleLogout}>Log out</button>
+          </>
+        )}
+        {!isLoggedIn && (
+          <div className="google-login-container">
+            <GoogleLogin
+              onSuccess={handleLoginSuccess}
+              onError={handleLoginFailure}
+              useOneTap
+            />
+          </div>
+        )}
+      </div>
       {isLoggedIn && (
-        <div>
+        <div className="user-info">
           <img
             src={userData.picture}
             alt={`${userData.name} profile`}
-            style={{ width: "50px" }}
+            style={{ width: "50px", borderRadius: "50%" }}
           />
           <span>{userData.name}</span>
         </div>

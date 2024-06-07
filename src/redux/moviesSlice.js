@@ -19,14 +19,37 @@ export const fetchMoviesByCategory = createAsyncThunk(
   }
 );
 
-// Async thunk for fetching movie details
+// Fetch movies by genre
+export const fetchMoviesByGenre = createAsyncThunk(
+  "movies/fetchMoviesByGenre",
+  async ({ genreId, genreName }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/discover/movie`, {
+        params: {
+          api_key: API_KEY,
+          language: "en-US",
+          page: 1,
+          with_genres: genreId,
+        },
+      });
+      return { genreName, movies: response.data.results };
+    } catch (error) {
+      return rejectWithValue(error.toString());
+    }
+  }
+);
+
+// Async thunk for fetching movie details including cast and videos
 export const fetchMovieById = createAsyncThunk(
   "movies/fetchMovieById",
   async (movieId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`
-      );
+      const response = await axios.get(`${BASE_URL}/movie/${movieId}`, {
+        params: {
+          api_key: API_KEY,
+          append_to_response: "credits,videos", // Append videos to the response
+        },
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.toString());
@@ -56,6 +79,13 @@ const initialState = {
     upcoming: [],
     top_rated: [],
   },
+  genres: {
+    action: [],
+    adventure: [],
+    comedy: [],
+    drama: [],
+    fantasy: [],
+  },
   movieDetails: {},
   searchResults: [],
   status: "idle",
@@ -80,7 +110,21 @@ const moviesSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       })
-      // Handle fetchMovieById
+      .addCase(fetchMoviesByGenre.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchMoviesByGenre.fulfilled, (state, action) => {
+        const { genreName, movies } = action.payload;
+        state.genres[genreName] = movies;
+        state.status = "succeeded";
+      })
+      .addCase(fetchMoviesByGenre.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(fetchMovieById.pending, (state) => {
+        state.status = "loading";
+      })
       .addCase(fetchMovieById.fulfilled, (state, action) => {
         state.movieDetails[action.meta.arg] = action.payload;
         state.status = "succeeded";
@@ -89,7 +133,6 @@ const moviesSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       })
-      // Handle searchMovies
       .addCase(searchMovies.fulfilled, (state, action) => {
         state.searchResults = action.payload.results;
         state.status = "succeeded";

@@ -1,51 +1,61 @@
+/* Main container for the card grid */
 .cardGrid {
-  display: flex;
+  display: flex; /* Use flexbox for layout */
   flex-direction: column; /* Arrange categories vertically */
   gap: 20px; /* Reduce gap between categories */
   padding: 10px; /* Maintain some padding around the grid */
-  background-color: black;
+  background-color: #333; /* Set background color */
+  color: goldenrod;
 }
 
+/* Container for each category section */
 .categorySection {
   margin-bottom: 10px; /* Add a small margin at the bottom of each category section */
 }
 
+/* Header for each category */
 .categoryHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space out elements evenly */
+  align-items: center; /* Center items vertically */
   margin-bottom: 5px; /* Reduce the margin below the category header */
 }
 
+/* Slider container */
 .slickSlider {
-  width: 100%;
+  width: 100%; /* Set the width of the slider */
 }
 
+/* Each slide in the slider */
 .slickSlide {
-  display: flex;
-  justify-content: center;
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center items horizontally */
   margin: 0 2px; /* Reduce space between slides */
 }
 
+/* Container for each movie card */
 .movieCard {
-  background-color: black;
-  border: 25px solid goldenrod;
-  border-radius: 20px;
-  overflow: hidden;
+  background-color: black; /* Set background color */
+  border: 25px solid goldenrod; /* Set border color and width */
+  border-radius: 20px; /* Round the corners */
+  overflow: hidden; /* Hide overflow content */
   width: 250px; /* Adjust the width of movie cards */
 }
 
+/* Movie card image */
 .movieCard img {
-  width: 100%;
-  display: block;
+  width: 100%; /* Set image to fill the card */
+  display: block; /* Remove any default spacing */
 }
 
+/* Info section inside each movie card */
 .movieInfo {
   padding: 5px; /* Reduce padding inside movie cards */
-  text-align: left;
+  text-align: left; /* Align text to the left */
   font-size: 10px; /* Reduce font size */
 }
 
+/* Title for each category */
 .categoryTitle {
   font-size: 20px; /* Reduce the font size of category titles */
   margin: 5px 0; /* Reduce margin around category titles */
@@ -53,25 +63,28 @@
 
 /* Button styled as a link */
 .linkButton {
-  background: none;
-  color: goldenrod;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  text-decoration: underline;
+  background: none; /* Remove background */
+  color: var(--primary-color); /* Set text color */
+  border: none; /* Remove border */
+  padding: 0; /* Remove padding */
+  font: inherit; /* Inherit font style */
+  cursor: pointer; /* Change cursor to pointer */
+  text-decoration: underline; /* Underline text */
 }
 
+/* Hover effect for link buttons */
 .linkButton:hover {
   text-decoration: none;
+  color: black; /* Remove underline on hover */
 }
 
 /* Traditional link */
 .linkA {
-  color: goldenrod;
-  text-decoration: underline;
+  color: goldenrod; /* Set link color */
+  text-decoration: underline; /* Underline text */
 }
 
+/* Hover effect for traditional links */
 .linkA:hover {
-  text-decoration: none;
+  text-decoration: none; /* Remove underline on hover */
 }

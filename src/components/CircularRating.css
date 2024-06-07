@@ -1,0 +1,44 @@
+/* Container for the circular rating */
+.circular-rating {
+  position: relative; /* Position elements relative to this container */
+  display: inline-block; /* Display as an inline-block element */
+  width: 80px; /* Set width of the container */
+  height: 80px; /* Set height of the container */
+}
+
+/* SVG element for the circular rating */
+.circular-rating svg {
+  transform: rotate(-90deg); /* Rotate the SVG to start from the top */
+}
+
+/* Background circle for the rating */
+.progress-circle-bg {
+  fill: none; /* No fill color */
+  stroke: #e0e0e0; /* Light gray stroke color */
+}
+
+/* Foreground circle for the rating */
+.progress-circle-fg {
+  fill: goldenrod; /* No fill color */
+  stroke-linecap: round; /* Round the ends of the stroke */
+  transition: stroke-dashoffset 0.5s ease; /* Smooth transition for the stroke offset */
+}
+
+/* Text inside the circular rating */
+.progress-text {
+  position: absolute; /* Absolute positioning */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust position to be fully centered */
+  font-size: 18px; /* Set font size */
+  font-weight: bold; /* Make text bold */
+  color: black; /* Set text color */
+}
+
+/* Label next to the circular rating */
+.rating-label {
+  margin-left: 10px; /* Add margin to the left of the label */
+  font-size: 18px; /* Set font size */
+  font-weight: bold; /* Make text bold */
+  color: goldenrod; /* Set text color */
+}

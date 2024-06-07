@@ -4,7 +4,10 @@ import Navbar from "./components/Navbar";
 import CardGrid from "./components/CardGrid";
 import MovieDetails from "./components/MovieDetails";
 import SearchResults from "./components/SearchResults";
+import SignUp from "./components/SignUp";
+import MyAccount from "./components/MyAccount";
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
+import CategoryMovies from "./components/CategoryMovies";
 import axios from "axios";
 import "./styles/App.css";
 
@@ -16,6 +19,8 @@ function App() {
     onSuccess: (tokenResponse) => {
       console.log("Token received:", tokenResponse);
       setUser(tokenResponse);
+      // Optionally, you can navigate to a specific page after login
+      // navigate('/account');
     },
     onError: (error) => console.log("Login Failed:", error),
     scope: "email profile openid",
@@ -76,6 +81,9 @@ function App() {
         />
         <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/search" element={<SearchResults />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/account" element={<MyAccount />} />
+        <Route path="/category/:categoryOrGenre" element={<CategoryMovies />} />
       </Routes>
     </div>
   );

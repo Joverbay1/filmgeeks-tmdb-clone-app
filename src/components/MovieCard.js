@@ -1,4 +1,3 @@
-// MovieCard.js
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./MovieCard.module.css";
@@ -13,7 +12,7 @@ const MovieCard = ({ movie }) => {
         <img src={imageUrl} alt={movie.title} loading="lazy" />
         <div className={styles.movieInfo}>
           <h3>{movie.title}</h3>
-          <p>{movie.overview.substring(0, 100)}...</p>
+          <p>{movie.release_date}</p>
         </div>
       </Link>
     </div>

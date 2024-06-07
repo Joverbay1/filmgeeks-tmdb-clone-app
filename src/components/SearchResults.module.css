@@ -1,16 +1,20 @@
+/* Container for the search results */
 .searchResults {
-  padding: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+  padding: 20px; /* Add padding around the container */
+  display: flex; /* Use flexbox for layout */
+  flex-wrap: wrap; /* Wrap items to the next line */
+  gap: 10px; /* Add gap between items */
+  justify-content: center; /* Center items horizontally */
+  background-color: #333;
 }
 
+/* Paragraphs inside the search results */
 .searchResults p {
-  width: 100%;
-  text-align: center;
+  width: 100%; /* Make paragraphs full width */
+  text-align: center; /* Center text horizontally */
 }
 
+/* Movie cards inside the search results */
 .searchResults .movieCard {
-  margin: 10px;
+  margin: 10px; /* Add margin around each movie card */
 }

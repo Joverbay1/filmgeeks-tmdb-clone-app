@@ -1,0 +1,12 @@
+/* Define CSS variables for global use */
+:root {
+  --primary-color: goldenrod; /* Primary color used for highlights and accents */
+  --secondary-color: black; /* Secondary color used for background or text */
+  --background-color: #333; /* Background color for elements */
+  --text-color: black; /* Default text color */
+  --font-family: Arial, sans-serif; /* Default font family */
+  --max-width: 1200px; /* Maximum width for containers */
+  --padding: 20px; /* Default padding for elements */
+  --border-radius: 10px; /* Default border radius for rounded corners */
+  --transition-duration: 0.3s; /* Default duration for transitions */
+}
