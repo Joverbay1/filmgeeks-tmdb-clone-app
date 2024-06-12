@@ -4,7 +4,7 @@ import "./CircularRating.css";
 const CircularRating = ({ rating }) => {
   const radius = 40;
   const strokeWidth = 8;
-  const normalizedRadius = radius - strokeWidth * 2;
+  const normalizedRadius = radius - strokeWidth / 2;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = circumference - (rating / 100) * circumference;
 

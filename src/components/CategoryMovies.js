@@ -1,57 +1,78 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import {
   fetchMoviesByCategory,
   fetchMoviesByGenre,
+  selectMoviesByCategory,
+  selectMoviesByGenre,
 } from "../redux/moviesSlice";
-import MovieCard from "./MovieCard";
 import Spinner from "./Spinner";
+import MovieCard from "./MovieCard";
 import styles from "./CategoryMovies.module.css";
 
 const CategoryMovies = () => {
-  const { categoryOrGenre } = useParams();
+  const { categoryOrGenre, genreName } = useParams();
   const dispatch = useDispatch();
-  const movies = useSelector(
-    (state) =>
-      state.movies.genres[categoryOrGenre] ||
-      state.movies.categories[categoryOrGenre] ||
-      []
+  const categoryOrGenreParam = categoryOrGenre || genreName;
+  const moviesByCategory = useSelector((state) =>
+    selectMoviesByCategory(categoryOrGenreParam)(state)
   );
+  const moviesByGenre = useSelector((state) =>
+    selectMoviesByGenre(categoryOrGenreParam)(state)
+  );
+  const movies = moviesByCategory.length ? moviesByCategory : moviesByGenre;
   const status = useSelector((state) => state.movies.status);
   const error = useSelector((state) => state.movies.error);
 
   useEffect(() => {
     if (
-      ["popular", "now_playing", "upcoming", "top_rated"].includes(
-        categoryOrGenre
-      )
+      status === "idle" ||
+      (!moviesByCategory.length && !moviesByGenre.length)
     ) {
-      dispatch(fetchMoviesByCategory({ category: categoryOrGenre }));
-    } else {
-      const genreMap = {
-        action: 28,
-        adventure: 12,
-        comedy: 35,
-        drama: 18,
-        fantasy: 14,
-      };
-      dispatch(
-        fetchMoviesByGenre({
-          genreId: genreMap[categoryOrGenre],
-          genreName: categoryOrGenre,
-        })
-      );
+      if (
+        ["popular", "now_playing", "upcoming", "top_rated"].includes(
+          categoryOrGenreParam
+        )
+      ) {
+        dispatch(fetchMoviesByCategory({ category: categoryOrGenreParam }));
+      } else {
+        const genreMap = {
+          action: 28,
+          adventure: 12,
+          comedy: 35,
+          drama: 18,
+          fantasy: 14,
+        };
+        dispatch(
+          fetchMoviesByGenre({
+            genreId: genreMap[categoryOrGenreParam],
+            genreName: categoryOrGenreParam,
+          })
+        );
+      }
     }
-  }, [dispatch, categoryOrGenre]);
+  }, [
+    dispatch,
+    categoryOrGenreParam,
+    status,
+    moviesByCategory.length,
+    moviesByGenre.length,
+  ]);
+
+  if (status === "loading") {
+    return <Spinner />;
+  }
+
+  if (status === "failed") {
+    return <p>Error: {error?.message || "Something went wrong"}</p>;
+  }
 
   return (
     <div className={styles.categoryMovies}>
-      <h2>{categoryOrGenre.replace("_", " ").toUpperCase()}</h2>
-      {status === "loading" && <Spinner />}
-      {status === "failed" && <p>Error: {error.message}</p>}
+      <h2>{categoryOrGenreParam.replace("_", " ").toUpperCase()}</h2>
       <div className={styles.movieGrid}>
-        {movies.length > 0 ? (
+        {movies.length ? (
           movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)
         ) : (
           <p>No movies available.</p>

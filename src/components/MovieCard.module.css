@@ -20,7 +20,7 @@
 /* Info section inside each movie card */
 .movieInfo {
   padding: 10px; /* Increase padding inside movie cards for better spacing */
-  text-align: center; /* Align text to the left */
+  text-align: center; /* Center text for uniformity */
   font-size: 12px; /* Adjust font size for better readability */
   color: goldenrod; /* Set text color to goldenrod */
 }

@@ -6,6 +6,7 @@ const MovieCard = ({ movie }) => {
   const imageUrl = movie.poster_path
     ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
     : "final project/filmgeeks-tmdb-clone-app/public/FilmGeeks-Logo.jpg";
+
   return (
     <div className={styles.movieCard}>
       <Link to={`/movie/${movie.id}`}>

@@ -1,0 +1,31 @@
+.back-to-top {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 1000;
+}
+
+.back-to-top button {
+  background-color: goldenrod; /* Change to a brighter color */
+  color: white;
+  border: none;
+  padding: 15px 25px; /* Increase padding for larger button */
+  border-radius: 50px; /* Make the button more rounded */
+  cursor: pointer;
+  font-size: 18px; /* Increase font size */
+  font-weight: bold; /* Make the text bold */
+  opacity: 0.8;
+  transition: opacity 0.3s, transform 0.3s; /* Add transition for hover effects */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
+}
+
+.back-to-top button:hover {
+  opacity: 1;
+  transform: scale(1.1); /* Slightly enlarge the button on hover */
+}
+
+.back-to-top button::after {
+  content: "↑";
+  display: inline-block;
+  margin-left: 8px; /* Add an arrow icon */
+}

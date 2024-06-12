@@ -1,0 +1,84 @@
+/* Container for the sign-in form */
+.signin-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #333;
+  color: white;
+  padding: 20px;
+}
+
+/* Title of the sign-in form */
+.signin-title {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: goldenrod;
+}
+
+/* Sign-in form */
+.signin-form {
+  background-color: #444;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Form group for inputs */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Labels for inputs */
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1em;
+  color: goldenrod;
+}
+
+/* Input fields */
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1em;
+}
+
+/* Sign-in button */
+.signin-button {
+  background-color: goldenrod;
+  color: black;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.signin-button:hover {
+  background-color: #daa520;
+}
+
+/* Additional options (like forgot password) */
+.signin-options {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* Links */
+.signin-options a {
+  color: goldenrod;
+  text-decoration: none;
+}
+
+.signin-options a:hover {
+  text-decoration: underline;
+}

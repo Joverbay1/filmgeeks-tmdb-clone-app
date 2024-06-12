@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchMovieById } from "../redux/moviesSlice";
+import { fetchMovieById, makeSelectMovieDetails } from "../redux/moviesSlice";
 import { useParams, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,13 +9,18 @@ import {
   faClock,
   faPlay,
 } from "@fortawesome/free-solid-svg-icons";
-import CircularRating from "./CircularRating"; // Import the CircularRating component
+import CircularRating from "./CircularRating";
+import Spinner from "./Spinner";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import "./MovieDetails.css";
 
 const MovieDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const movie = useSelector((state) => state.movies.movieDetails[id] || {});
+  const selectMovieDetails = makeSelectMovieDetails();
+  const movie = useSelector((state) => selectMovieDetails(state, id));
   const status = useSelector((state) => state.movies.status);
   const error = useSelector((state) => state.movies.error);
   const isLoggedIn = useSelector((state) => state.user?.isLoggedIn);
@@ -24,7 +29,6 @@ const MovieDetails = () => {
     if (!movie.title) {
       dispatch(fetchMovieById(id));
     }
-    console.log(movie); // Log the movie object to verify the data structure
   }, [dispatch, id, movie]);
 
   const handleCreateEditList = () => {
@@ -55,9 +59,48 @@ const MovieDetails = () => {
     (video) => video.type === "Trailer" && video.site === "YouTube"
   )?.key;
 
+  // Extracting director and writer information
+  const director = movie.credits?.crew?.find((crew) => crew.job === "Director");
+  const writers = movie.credits?.crew?.filter((crew) =>
+    ["Screenplay", "Writer", "Story"].includes(crew.job)
+  );
+
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 5,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
   return (
     <div className="movie-details-container">
-      {status === "loading" && <p>Loading...</p>}
+      {status === "loading" && <Spinner />}
       {status === "failed" && <p>Error: {error.message}</p>}
       {movie.title && (
         <div className="movie-details">
@@ -89,12 +132,17 @@ const MovieDetails = () => {
                 <strong>Overview:</strong> {movie.overview}
               </p>
               <div className="movie-crew">
-                <p>
-                  <strong>Director:</strong> {movie.director}
-                </p>
-                <p>
-                  <strong>Writer:</strong> {movie.writer}
-                </p>
+                {director && (
+                  <p>
+                    <strong>Director:</strong> {director.name}
+                  </p>
+                )}
+                {writers && writers.length > 0 && (
+                  <p>
+                    <strong>Writer{writers.length > 1 ? "s" : ""}:</strong>{" "}
+                    {writers.map((writer) => writer.name).join(", ")}
+                  </p>
+                )}
               </div>
               <div className="movie-meta">
                 <p>
@@ -108,7 +156,7 @@ const MovieDetails = () => {
                 </p>
               </div>
               <div className="movie-rating">
-                <CircularRating rating={movie.vote_average * 10} />{" "}
+                <CircularRating rating={movie.vote_average * 10} />
                 <div className="rating-label">User Score</div>
               </div>
               <div className="movie-actions">
@@ -157,26 +205,45 @@ const MovieDetails = () => {
           </div>
           <div id="cast" className="movie-section">
             <h3>Top Billed Cast</h3>
-            <div className="cast-grid">
-              {movie.credits?.cast?.slice(0, 6).map((actor) => (
+            <Slider {...settings}>
+              {movie.credits?.cast?.slice(0, 10).map((cast) => (
                 <Link
-                  to={`/actor/${actor.id}`}
-                  key={actor.id}
+                  to={`/actor/${cast.id}`}
+                  key={cast.id}
                   className="actor-card"
                 >
                   <img
-                    src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
-                    alt={actor.name}
+                    src={`https://image.tmdb.org/t/p/w185${cast.profile_path}`}
+                    alt={cast.name}
                   />
-                  <p>{actor.name}</p>
-                  <p>{actor.character}</p>
+                  <div className="actor-info">
+                    <p className="actor-name">{cast.name}</p>
+                    <p className="actor-character">{cast.character}</p>
+                  </div>
                 </Link>
               ))}
-            </div>
+            </Slider>
           </div>
-          <div id="full-cast" className="movie-section">
+          <div id="full-cast" className="movie-section full-cast-section">
             <h3>Full Cast & Crew</h3>
-            {/* Add full cast and crew rendering here */}
+            <Slider {...settings}>
+              {movie.credits?.cast?.map((cast) => (
+                <Link
+                  to={`/actor/${cast.id}`}
+                  key={cast.id}
+                  className="full-cast-card"
+                >
+                  <img
+                    src={`https://image.tmdb.org/t/p/w185${cast.profile_path}`}
+                    alt={cast.name}
+                  />
+                  <div className="full-cast-info">
+                    <p className="full-cast-name">{cast.name}</p>
+                    <p className="full-cast-character">{cast.character}</p>
+                  </div>
+                </Link>
+              ))}
+            </Slider>
           </div>
         </div>
       )}

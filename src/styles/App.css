@@ -30,3 +30,36 @@ body {
 .section {
   padding: 20px 0; /* Add padding at the top and bottom */
 }
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .actor-details-container {
+    padding: 15px;
+  }
+
+  .actor-photo {
+    width: 300px;
+    height: auto;
+  }
+
+  .known-for-card img {
+    width: 150px;
+    height: auto;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 1025px) {
+  .actor-details-container {
+    padding: 20px;
+  }
+
+  .actor-photo {
+    width: 400px;
+    height: auto;
+  }
+
+  .known-for-card img {
+    width: 225px;
+    height: auto;
+  }
+}

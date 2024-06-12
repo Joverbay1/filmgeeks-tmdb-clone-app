@@ -1,6 +1,13 @@
+import React from "react";
+import "./Spinner.css";
+
 const Spinner = () => {
-  // Spinner code
-  return <div>Loading...</div>;
+  return (
+    <div className="spinner">
+      <div className="double-bounce1"></div>
+      <div className="double-bounce2"></div>
+    </div>
+  );
 };
 
-export default Spinner; // Default export
+export default Spinner;

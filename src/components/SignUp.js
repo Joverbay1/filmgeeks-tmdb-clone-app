@@ -1,66 +1,75 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import "./SignUp.css";
-import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-    // Example validation and submission logic
-    if (!firstName || !lastName || !email || !password) {
-      setError("All fields are required");
+    if (password !== confirmPassword) {
+      setMessage("Passwords do not match");
+      setIsSuccess(false);
       return;
     }
 
-    // Replace this with your actual account creation logic
-    fetch("/api/create-account", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ firstName, lastName, email, password }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.text().then((text) => {
-            throw new Error(text || "Account creation failed");
-          });
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Handle successful account creation
-        navigate("/account");
-      })
-      .catch((err) => {
-        setError(err.message);
+    setMessage(""); // Clear any existing messages before making a new signup attempt
+
+    try {
+      const response = await axios.post("/api/signup", {
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword,
       });
+
+      if (response.data.success) {
+        setMessage("Sign up successful! Redirecting to your account...");
+        setIsSuccess(true);
+        setTimeout(() => {
+          console.log("Navigating to /account");
+          navigate("/account");
+        }, 2000);
+      } else {
+        setMessage(response.data.message);
+        setIsSuccess(false);
+      }
+    } catch (error) {
+      setMessage(
+        error.response?.data?.message || "An error occurred during signup"
+      );
+      setIsSuccess(false);
+    }
   };
 
   return (
     <div className="signup-container">
-      <form className="signup-form" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="signup-form">
         <h2>Sign Up</h2>
-        {error && <div className="error-message">{error}</div>}
         <div className="form-group">
           <input
             type="text"
-            placeholder="First name"
+            placeholder="First Name"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
+            required
           />
           <input
             type="text"
-            placeholder="Last name"
+            placeholder="Last Name"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
+            required
           />
         </div>
         <input
@@ -68,26 +77,28 @@ const SignUp = () => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
-        <div className="password-requirements">
-          <p>A minimum of 10 characters</p>
-          <p>At least one number</p>
-          <p>At least one lowercase letter</p>
-          <p>At least one uppercase letter</p>
-        </div>
-        <button type="submit">Create account</button>
-        <div className="or-divider">or</div>
-        <button type="button" className="google-login">
-          Sign in with Google
-        </button>
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+        />
+        <button type="submit">Sign Up</button>
+        {message && (
+          <p className={`message ${isSuccess ? "success" : ""}`}>{message}</p>
+        )}
         <p>
-          Already have an account? <a href="/signin">Sign in</a>
+          Already have an account? <Link to="/signin">Sign In</Link>
         </p>
       </form>
     </div>

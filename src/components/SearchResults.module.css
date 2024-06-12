@@ -12,6 +12,7 @@
 .searchResults p {
   width: 100%; /* Make paragraphs full width */
   text-align: center; /* Center text horizontally */
+  color: goldenrod; /* Add text color for better visibility */
 }
 
 /* Movie cards inside the search results */

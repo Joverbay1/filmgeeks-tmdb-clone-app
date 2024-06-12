@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import "./Navbar.css";
 import logo from "../FilmGeeksLogo.jpg";
-import { login, logout } from "../redux/userSlice"; // Make sure this is imported
+import { logout } from "../redux/userSlice";
+import { searchMovies } from "../redux/moviesSlice"; // Import the searchMovies action
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -14,24 +14,14 @@ const Navbar = () => {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const userData = useSelector((state) => state.user.user);
 
-  const handleLoginSuccess = (response) => {
-    console.log("Login Success:", response);
-    dispatch(login(response)); // Dispatch login action with user data
-  };
-
-  const handleLoginFailure = (error) => {
-    console.error("Login Failed:", error);
-    alert("Login failed. Please try again.");
-  };
-
   const handleLogout = () => {
-    googleLogout();
-    dispatch(logout()); // Dispatch logout action
+    dispatch(logout());
   };
 
   const handleSearch = (event) => {
     event.preventDefault();
     if (searchTerm.trim()) {
+      dispatch(searchMovies({ query: searchTerm })); // Dispatch the searchMovies action
       navigate(`/search?q=${searchTerm}`);
     }
   };
@@ -44,7 +34,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="logo">
         <Link to="/">
-          <img src={logo} alt="Logo" style={{ width: "80px" }} />
+          <img src={logo} alt="Logo" />
         </Link>
       </div>
       <form onSubmit={handleSearch} className="search-form">
@@ -87,15 +77,6 @@ const Navbar = () => {
             </Link>
             <button onClick={handleLogout}>Log out</button>
           </>
-        )}
-        {!isLoggedIn && (
-          <div className="google-login-container">
-            <GoogleLogin
-              onSuccess={handleLoginSuccess}
-              onError={handleLoginFailure}
-              useOneTap
-            />
-          </div>
         )}
       </div>
       {isLoggedIn && (

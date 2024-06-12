@@ -77,7 +77,20 @@
   color: #ccc;
 }
 
+.google-login-container {
+  display: none; /* Hide Google login container */
+}
+
 .error-message {
   color: red;
   margin-bottom: 10px;
+}
+
+.message {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.message.success {
+  color: green;
 }

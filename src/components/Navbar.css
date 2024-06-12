@@ -40,14 +40,6 @@
   cursor: pointer;
 }
 
-/* Google login container */
-.google-login-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 0;
-}
-
 /* Hamburger icon */
 .hamburger {
   display: flex;

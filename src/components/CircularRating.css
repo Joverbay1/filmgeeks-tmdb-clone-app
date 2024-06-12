@@ -19,7 +19,7 @@
 
 /* Foreground circle for the rating */
 .progress-circle-fg {
-  fill: goldenrod; /* No fill color */
+  fill: none; /* No fill color */
   stroke-linecap: round; /* Round the ends of the stroke */
   transition: stroke-dashoffset 0.5s ease; /* Smooth transition for the stroke offset */
 }

@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from "@reduxjs/toolkit";
 import axios from "axios";
 
 const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
@@ -47,7 +51,7 @@ export const fetchMovieById = createAsyncThunk(
       const response = await axios.get(`${BASE_URL}/movie/${movieId}`, {
         params: {
           api_key: API_KEY,
-          append_to_response: "credits,videos", // Append videos to the response
+          append_to_response: "credits,videos",
         },
       });
       return response.data;
@@ -72,6 +76,24 @@ export const searchMovies = createAsyncThunk(
   }
 );
 
+// Fetch actor details by ID
+export const fetchActorById = createAsyncThunk(
+  "actors/fetchActorById",
+  async (actorId, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/person/${actorId}`, {
+        params: {
+          api_key: API_KEY,
+          append_to_response: "movie_credits",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.toString());
+    }
+  }
+);
+
 const initialState = {
   categories: {
     popular: [],
@@ -87,6 +109,7 @@ const initialState = {
     fantasy: [],
   },
   movieDetails: {},
+  actorDetails: {},
   searchResults: [],
   status: "idle",
   error: null,
@@ -133,6 +156,9 @@ const moviesSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       })
+      .addCase(searchMovies.pending, (state) => {
+        state.status = "loading";
+      })
       .addCase(searchMovies.fulfilled, (state, action) => {
         state.searchResults = action.payload.results;
         state.status = "succeeded";
@@ -140,8 +166,60 @@ const moviesSlice = createSlice({
       .addCase(searchMovies.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(fetchActorById.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchActorById.fulfilled, (state, action) => {
+        state.actorDetails[action.meta.arg] = action.payload;
+        state.status = "succeeded";
+      })
+      .addCase(fetchActorById.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
   },
 });
 
 export default moviesSlice.reducer;
+
+// Input selector to get movie details by ID
+const selectMovieDetailsById = (state, movieId) =>
+  state.movies.movieDetails[movieId];
+
+// Memoized selector to get movie details
+export const makeSelectMovieDetails = () =>
+  createSelector([selectMovieDetailsById], (movieDetails) => ({
+    ...movieDetails, // Ensures the result function transforms the input
+    transformed: true, // Adding a dummy transformation to illustrate the concept
+  }));
+
+// Input selector to get actor details by ID
+const selectActorDetailsById = (state, actorId) =>
+  state.movies.actorDetails[actorId];
+
+// Memoized selector to get actor details
+export const makeSelectActorDetails = () =>
+  createSelector([selectActorDetailsById], (actorDetails) => {
+    if (actorDetails) {
+      return {
+        ...actorDetails,
+        transformed: true, // Dummy transformation for illustration
+      };
+    }
+    return {};
+  });
+
+// Memoized selector to get movies by category
+export const selectMoviesByCategory = (category) =>
+  createSelector(
+    (state) => state.movies.categories[category] || [],
+    (movies) => movies
+  );
+
+// Memoized selector to get movies by genre
+export const selectMoviesByGenre = (genre) =>
+  createSelector(
+    (state) => state.movies.genres[genre] || [],
+    (movies) => movies
+  );
