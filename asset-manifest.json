@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/filmgeeks-tmdb-clone-app/static/css/main.300bec50.css",
-    "main.js": "/filmgeeks-tmdb-clone-app/static/js/main.68128a9a.js",
+    "main.css": "/filmgeeks-tmdb-clone-app/static/css/main.b012c7fe.css",
+    "main.js": "/filmgeeks-tmdb-clone-app/static/js/main.0ad8fed9.js",
     "static/js/453.6c4f0276.chunk.js": "/filmgeeks-tmdb-clone-app/static/js/453.6c4f0276.chunk.js",
     "static/media/FilmGeeksLogo.jpg": "/filmgeeks-tmdb-clone-app/static/media/FilmGeeksLogo.bb990bae3ef97dc1d9a5.jpg",
     "static/media/slick.svg": "/filmgeeks-tmdb-clone-app/static/media/slick.2630a3e3eab21c607e21.svg",
@@ -9,12 +9,12 @@
     "static/media/slick.ttf": "/filmgeeks-tmdb-clone-app/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/filmgeeks-tmdb-clone-app/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/filmgeeks-tmdb-clone-app/index.html",
-    "main.300bec50.css.map": "/filmgeeks-tmdb-clone-app/static/css/main.300bec50.css.map",
-    "main.68128a9a.js.map": "/filmgeeks-tmdb-clone-app/static/js/main.68128a9a.js.map",
+    "main.b012c7fe.css.map": "/filmgeeks-tmdb-clone-app/static/css/main.b012c7fe.css.map",
+    "main.0ad8fed9.js.map": "/filmgeeks-tmdb-clone-app/static/js/main.0ad8fed9.js.map",
     "453.6c4f0276.chunk.js.map": "/filmgeeks-tmdb-clone-app/static/js/453.6c4f0276.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.300bec50.css",
-    "static/js/main.68128a9a.js"
+    "static/css/main.b012c7fe.css",
+    "static/js/main.0ad8fed9.js"
   ]
 }
